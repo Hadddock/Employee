@@ -1,21 +1,53 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Encodings.Web;
 
 namespace Employee.Controllers;
 
+[ApiController]
+[Route("[controller]")]
 public class EmployeeController : Controller
 {
 	// 
 	// GET: /Employee/
-	public string Index()
+	[HttpGet]
+	public IActionResult Index()
 	{
-		return "This is my default action...";
+		ViewData["Title"] = "Search";
+		
+		return View();
 	}	
 	// 
-	// GET: /Employee/Detail/ 
-	public string Detail(string ID)
+	// GET: /Employee/GetEmployee/ 
+	[HttpGet("{id}")]
+	public IActionResult Get(string id)
 	{
-		return HtmlEncoder.Default.Encode($"Employee ID is: {ID}");
+		ViewData["Title"] = "Get";
+		ViewData["id"] = id;
+		return View("Get");
+	}
+	// 
+	// GET: /Employee/GetEmployee/ 
+	[HttpPost]
+	public IActionResult Post()
+	{
+		ViewData["Title"] = "Post";
+		return View("Post");
+	}
 
+	[HttpPut("{id}")]
+	public IActionResult Put(string id)
+	{
+		ViewData["Title"] = "Put";
+		ViewData["id"] = id;
+		return View("Put");
+	}
+
+	[HttpDelete("{id}")]
+	public IActionResult Delete(string id)
+	{
+		ViewData["Title"] = "Delete";
+		ViewData["id"] = id;
+		return View("Delete");
 	}
 }
