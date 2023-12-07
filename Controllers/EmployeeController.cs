@@ -8,17 +8,14 @@ namespace Employee.Controllers;
 [Route("[controller]")]
 public class EmployeeController : Controller
 {
-	// 
-	// GET: /Employee/
+
 	[HttpGet]
 	public IActionResult Index()
 	{
 		ViewData["Title"] = "Search";
-		
 		return View();
 	}	
-	// 
-	// GET: /Employee/GetEmployee/ 
+
 	[HttpGet("{id}")]
 	public IActionResult Get(string id)
 	{
@@ -26,12 +23,12 @@ public class EmployeeController : Controller
 		ViewData["id"] = id;
 		return View("Get");
 	}
-	// 
-	// GET: /Employee/GetEmployee/ 
+
 	[HttpPost]
 	public IActionResult Post()
 	{
 		ViewData["Title"] = "Post";
+	
 		return View("Post");
 	}
 
