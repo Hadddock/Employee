@@ -1,25 +1,25 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Diagnostics;
+using Account.Models;
+using MongoDB.Driver.Core.Configuration;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-
+var connectionString = builder.Configuration["Employees:ConnectionString"];
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-var connectionString = "";
+builder.Services.AddSingleton<IMongoClient>(c => new MongoClient(connectionString));
+builder.Services.AddScoped(c => c.GetService<MongoClient>().StartSession());
 
 var app = builder.Build();
-
-if (!app.Environment.IsDevelopment())
-{
-
-	connectionString = Environment.GetEnvironmentVariable("ConnectionString");
-	
-}
-
-else{
-	connectionString = builder.Configuration["Employees:ConnectionString"];
-}
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -41,3 +41,5 @@ app.MapControllerRoute(
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+
