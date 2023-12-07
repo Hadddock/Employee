@@ -15,12 +15,7 @@ namespace Employee.Controllers
 
 		public IActionResult Index()
 		{
-			return View();
-		}
-
-		public IActionResult Privacy()
-		{
-			return View();
+			return RedirectToAction( "", "employee");
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
