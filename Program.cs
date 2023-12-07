@@ -1,11 +1,25 @@
 var builder = WebApplication.CreateBuilder(args);
 
-string connectionString = builder.Configuration["Employees:ConnectionString"];
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+var connectionString = "";
+
 var app = builder.Build();
+
+if (!app.Environment.IsDevelopment())
+{
+
+	connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+	
+}
+
+else{
+	connectionString = builder.Configuration["Employees:ConnectionString"];
+}
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
