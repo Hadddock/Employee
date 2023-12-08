@@ -25,7 +25,6 @@ namespace Employees
         [DisplayName("Date of Birth")]
         [BsonElement("date_of_birth")]
 		public DateTime DateOfBirth { get; set; }
-        [DisplayName("Date of Birth")]
         [BsonElement("email")]
 		public string Email {  get; set; }
 		[BsonElement("phone")]
