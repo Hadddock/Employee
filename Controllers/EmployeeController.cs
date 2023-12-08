@@ -102,14 +102,47 @@ public class EmployeeController : Controller
 		return RedirectToAction("Details", new {id = employee.Id });
     }
 
-    [HttpPut("{id}")]
-    [Route("employee/update/{id}")]
-    public IActionResult Put(string id)
-	{
-		ViewData["Title"] = "Put";
-		ViewData["id"] = id;
-		return View("Put");
-	}
+    [Route("employee/edit/{id}")]
+    public async Task<IActionResult> Edit(string id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var employee = await _collection.Find(e => e.Id == id).FirstOrDefaultAsync();
+        if (employee == null)
+        {
+            return NotFound();
+        }
+        return View(employee);
+    }
+
+    [HttpPost]
+    [Route("employee/edit/{id}")]
+    public async Task<IActionResult> Edit(string id, [FromForm] Employees.Employee employee)
+    {
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                await _collection.ReplaceOneAsync((e => e.Id == employee.Id), employee);
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return RedirectToAction("Edit");
+            }
+        }
+
+        else
+        {
+            return RedirectToAction("Edit");
+        }
+
+        return RedirectToAction("Details", new { id = employee.Id });
+    }
 
     [Route("employee/delete/{id}")]
     public async Task<IActionResult> Delete(string id)
