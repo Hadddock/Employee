@@ -6,9 +6,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Diagnostics;
-using Account.Models;
 using MongoDB.Driver.Core.Configuration;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +36,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
 	name: "default",
-	pattern: "{controller=Home}/{action=Index}/{id?}");
+	pattern: "/index");
 
 app.Run();
 
