@@ -10,7 +10,7 @@ namespace Employees
 
 		[BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 		[BsonElement("first_name")]
         [DisplayName("First Name")]
         public string FirstName { get; set; }
