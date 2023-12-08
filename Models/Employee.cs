@@ -26,13 +26,16 @@ namespace Employees
         [BsonElement("date_of_birth")]
 		public DateTime DateOfBirth { get; set; }
         [BsonElement("email")]
+        [DataType(DataType.EmailAddress)]
 		public string Email {  get; set; }
+        [DataType(DataType.PhoneNumber)]
 		[BsonElement("phone")]
 		public string Phone { get; set; }
 		[BsonElement("is_administrator")]
         [DisplayName("Administrator Privileges")]
         public bool IsAdministrator { get; set; }
 		[BsonElement("salary")]
+        [DataType(DataType.Currency)]
 		[BsonRepresentation(BsonType.Decimal128)]
 		public decimal Salary {  get; set; }	
 	}
