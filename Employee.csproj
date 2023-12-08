@@ -7,4 +7,19 @@
     <UserSecretsId>1462829c-7508-4430-a7d6-b6c85b64424f</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Views\Employees\**" />
+    <Content Remove="Views\Employees\**" />
+    <EmbeddedResource Remove="Views\Employees\**" />
+    <None Remove="Views\Employees\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\EmployeesController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.EntityFrameworkCore" Version="7.0.0-preview.1" />
+  </ItemGroup>
+
 </Project>
