@@ -69,6 +69,13 @@ public class EmployeeController : Controller
 	}
 
 
+	[HttpGet]
+	[Route("employee/create")]
+	public IActionResult Create()
+	{
+		return View();
+	}
+
 	[HttpPost]
 	[Route("employee/create")]
 	public IActionResult Post()
