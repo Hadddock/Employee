@@ -13,7 +13,6 @@ using EmployeeModel = Employees.Employee;
 namespace Employee.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
 public class EmployeeController : Controller
 
 {
@@ -27,7 +26,7 @@ public class EmployeeController : Controller
 	}
 
 	[HttpGet]
-    [Route("/index")]
+    [Route("/")]
     public IActionResult Index()
 	{
 		var newEmployee = new EmployeeModel
@@ -48,7 +47,7 @@ public class EmployeeController : Controller
 	}
 
 	[HttpGet]
-	[Route("/details/{id}")]
+	[Route("employee/details/{id}")]
 	public async Task<IActionResult> Details(string id)
 	{
 		if (id == null)
@@ -71,7 +70,7 @@ public class EmployeeController : Controller
 
 
 	[HttpPost]
-	[Route("/create")]
+	[Route("employee/create")]
 	public IActionResult Post()
 	{
 		ViewData["Title"] = "Post";
@@ -80,7 +79,7 @@ public class EmployeeController : Controller
 	}
 
 	[HttpPut("{id}")]
-    [Route("/update/{id}")]
+    [Route("employee/update/{id}")]
     public IActionResult Put(string id)
 	{
 		ViewData["Title"] = "Put";
@@ -89,7 +88,7 @@ public class EmployeeController : Controller
 	}
 
 	[HttpDelete("{id}")]
-    [Route("/delete/{id}")]
+    [Route("employee/delete/{id}")]
     public IActionResult Delete(string id)
 	{
 		ViewData["Title"] = "Delete";
