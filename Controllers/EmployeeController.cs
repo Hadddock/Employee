@@ -76,16 +76,34 @@ public class EmployeeController : Controller
 		return View();
 	}
 
-	[HttpPost]
-	[Route("employee/create")]
-	public IActionResult Post()
-	{
-		ViewData["Title"] = "Post";
+    [HttpPost]
+    [Route("employee/create")]
+    public async Task<IActionResult> Create([FromForm] Employees.Employee employee)
+    {
+        if (ModelState.IsValid)
+        {
+		
+			try
+			{
+                await _collection.InsertOneAsync(employee);
+            }
 
-		return View("Post");
-	}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+                return RedirectToAction("Create");
+            }
+        }
 
-	[HttpPut("{id}")]
+		else
+		{
+            return RedirectToAction("Create");
+        }
+
+		return RedirectToAction("Details", new {id = employee.Id });
+    }
+
+    [HttpPut("{id}")]
     [Route("employee/update/{id}")]
     public IActionResult Put(string id)
 	{
