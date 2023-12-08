@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using System.Text.Encodings.Web;
-using Account.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
