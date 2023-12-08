@@ -11,7 +11,6 @@ namespace Employees
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; }
 		[BsonElement("first_name")]
-        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 		[BsonElement("last_name")]
 		public string LastName { get; set; }
