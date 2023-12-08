@@ -50,11 +50,24 @@ public class EmployeeController : Controller
 
 	[HttpGet]
 	[Route("/details/{id}")]
-	public IActionResult Get(string id)
+	public async Task<IActionResult> Details(string id)
 	{
-		ViewData["Title"] = "Get";
-		ViewData["id"] = id;
-		return View("Get");
+		if (id == null)
+		{
+			return NotFound();
+            
+		}
+		var employees = await _collection.FindAsync(e => e.Id == id);
+		var employee = employees.FirstOrDefault();
+
+		if (employee == null)
+		{
+			return NotFound();
+		}
+
+		Console.WriteLine(employee);
+		ViewData["Title"] = "Details";
+		return View(employee);
 	}
 
 
