@@ -8,8 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using EmployeeModel = Employees.Employee; 
-
+using EmployeeModel = Employees.Employee;
 namespace Employee.Controllers;
 
 [ApiController]
@@ -112,12 +111,35 @@ public class EmployeeController : Controller
 		return View("Put");
 	}
 
-	[HttpDelete("{id}")]
     [Route("employee/delete/{id}")]
-    public IActionResult Delete(string id)
+    public async Task<IActionResult> Delete(string id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var employee = await _collection.Find(e => e.Id == id).FirstOrDefaultAsync();
+        
+        if (employee == null)
+        {
+            return NotFound();
+        }
+
+        return View("Delete",employee);
+    }
+
+
+	[HttpPost, Route("employee/delete/{id}")]
+	public async Task<IActionResult> DeleteConfirmed(string id)
 	{
-		ViewData["Title"] = "Delete";
-		ViewData["id"] = id;
-		return View("Delete");
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        await _collection.DeleteOneAsync(e => e.Id == id);
+		return RedirectToAction(nameof(Index));
 	}
+
 }
