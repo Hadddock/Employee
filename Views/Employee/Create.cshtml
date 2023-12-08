@@ -14,42 +14,42 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
+                <input asp-for="FirstName" class="form-control" required />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
+                <input asp-for="LastName" class="form-control" required />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="HireDate" class="control-label"></label>
-                <input asp-for="HireDate" class="form-control" />
+                <input asp-for="HireDate" class="form-control" required />
                 <span asp-validation-for="HireDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateOfBirth" class="control-label"></label>
-                <input asp-for="DateOfBirth" class="form-control" />
+                <input asp-for="DateOfBirth" class="form-control" required />
                 <span asp-validation-for="DateOfBirth" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <input type="email" asp-for="Email" class="form-control" required />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
+                <input type="tel" asp-for="Phone" class="form-control" required />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsAdministrator" /> @Html.DisplayNameFor(model => model.IsAdministrator)
+                    <input class="form-check-input" asp-for="IsAdministrator"  /> @Html.DisplayNameFor(model => model.IsAdministrator)
                 </label>
             </div>
             <div class="form-group">
                 <label asp-for="Salary" class="control-label"></label>
-                <input asp-for="Salary" class="form-control" />
+                <input type="number" asp-for="Salary" class="form-control" required />
                 <span asp-validation-for="Salary" class="text-danger"></span>
             </div>
             <div class="form-group">
