@@ -24,15 +24,13 @@ public class EmployeeController : Controller
 		_collection = _database.GetCollection<EmployeeModel>("employees");
 	}
 
-	[HttpGet]
-    [Route("/")]
+	[Route("/")]
     public IActionResult Index()
 	{
 		ViewData["Title"] = "Search";
 		return View();
 	}
 
-	[HttpGet]
 	[Route("employee/details/{id}")]
 	public async Task<IActionResult> Details(string id)
 	{
@@ -55,15 +53,13 @@ public class EmployeeController : Controller
 	}
 
 
-	[HttpGet]
 	[Route("employee/create")]
 	public IActionResult Create()
 	{
 		return View();
 	}
 
-    [HttpPost]
-    [Route("employee/create")]
+    [HttpPost, Route("employee/create")]
     public async Task<IActionResult> Create([FromForm] Employees.Employee employee)
     {
         if (ModelState.IsValid)
@@ -105,8 +101,7 @@ public class EmployeeController : Controller
         return View(employee);
     }
 
-    [HttpPost]
-    [Route("employee/edit/{id}")]
+    [HttpPost, Route("employee/edit/{id}")]
     public async Task<IActionResult> Edit(string id, [FromForm] Employees.Employee employee)
     {
         if (ModelState.IsValid && id == employee.Id)
@@ -118,7 +113,6 @@ public class EmployeeController : Controller
 
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
                 return RedirectToAction("Edit");
             }
         }
