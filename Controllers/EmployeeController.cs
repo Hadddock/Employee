@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using EmployeeModel = Employees.Employee;
 using System.Net;
+using Employees;
 
 namespace Employee.Controllers;
 
@@ -29,9 +30,8 @@ public class EmployeeController : Controller
 	[Route("/")]
     public async Task<IActionResult> Index()
 	{
-		ViewData["Title"] = "Search";
-		return View();
-	}
+        return RedirectToAction("Create");
+    }
 
 	[Route("employee/details/{id}")]
 	public async Task<IActionResult> Details(string id)
