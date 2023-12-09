@@ -28,19 +28,6 @@ public class EmployeeController : Controller
     [Route("/")]
     public IActionResult Index()
 	{
-		var newEmployee = new EmployeeModel
-		{
-			FirstName = "Jeff",
-			LastName = "Reff",
-			Salary = 45.50m,
-			DateOfBirth = new DateTime(1990, 12, 1),
-			HireDate = new DateTime(2019, 6, 1),
-			Phone = "4655552348",
-			Email = "Renchaw@fmail.com",
-			IsAdministrator = false,
-	};
-		//_collection.InsertOne(newEmployee);
-		Console.WriteLine(_collection);
 		ViewData["Title"] = "Search";
 		return View();
 	}
