@@ -38,10 +38,6 @@ namespace Employees
 		[BsonElement("is_administrator")]
         [DisplayName("Administrator Privileges")]
         public bool IsAdministrator { get; set; }
-		[BsonElement("salary")]
-        [DataType(DataType.Currency)]
-		[BsonRepresentation(BsonType.Decimal128)]
-		public decimal Salary {  get; set; }	
 	}
 
 	
