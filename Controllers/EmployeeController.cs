@@ -122,7 +122,7 @@ public class EmployeeController : Controller
     [Route("employee/edit/{id}")]
     public async Task<IActionResult> Edit(string id, [FromForm] Employees.Employee employee)
     {
-        if (ModelState.IsValid)
+        if (ModelState.IsValid && id == employee.Id)
         {
             try
             {
