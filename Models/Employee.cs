@@ -11,9 +11,11 @@ namespace Employees
 		[BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string? Id { get; set; }
-		[BsonElement("first_name")]
+        [StringLength(50, MinimumLength = 1)]
+        [BsonElement("first_name")]
         [DisplayName("First Name")]
         public string FirstName { get; set; }
+        [StringLength(50, MinimumLength = 1)]
         [DisplayName("Last Name")]
         [BsonElement("last_name")]
 		public string LastName { get; set; }
@@ -27,10 +29,12 @@ namespace Employees
 		public DateTime DateOfBirth { get; set; }
         [BsonElement("email")]
         [DataType(DataType.EmailAddress)]
-		public string Email {  get; set; }
+        [StringLength(254, MinimumLength = 3)]
+        public string Email {  get; set; }
         [DataType(DataType.PhoneNumber)]
 		[BsonElement("phone")]
-		public string Phone { get; set; }
+        [StringLength(50, MinimumLength = 4)]
+        public string Phone { get; set; }
 		[BsonElement("is_administrator")]
         [DisplayName("Administrator Privileges")]
         public bool IsAdministrator { get; set; }
