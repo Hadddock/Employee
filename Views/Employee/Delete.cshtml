@@ -70,3 +70,7 @@
 <div>
     <a asp-action="Details" asp-route-id="@Model?.Id">Details</a> 
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -9,6 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using EmployeeModel = Employees.Employee;
+using System.Net;
+
 namespace Employee.Controllers;
 
 [ApiController]
@@ -25,7 +27,7 @@ public class EmployeeController : Controller
 	}
 
 	[Route("/")]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
 	{
 		ViewData["Title"] = "Search";
 		return View();
@@ -37,21 +39,19 @@ public class EmployeeController : Controller
 		if (id == null)
 		{
 			return NotFound();
-            
-		}
-		var employees = await _collection.FindAsync(e => e.Id == id);
-		var employee = employees.FirstOrDefault();
-
-		if (employee == null)
-		{
-			return NotFound();
 		}
 
-		Console.WriteLine(employee);
-		ViewData["Title"] = "Details";
-		return View(employee);
+        try
+        {
+            var employees = await _collection.FindAsync(e => e.Id == id);
+            return View(employees.FirstOrDefault());
+        }
+
+        catch (Exception ex)
+        {
+            return View("Error", new Models.ErrorViewModel { Ex = ex });
+        }
 	}
-
 
 	[Route("employee/create")]
 	public IActionResult Create()
@@ -59,30 +59,25 @@ public class EmployeeController : Controller
 		return View();
 	}
 
-    [HttpPost, Route("employee/create")]
+    [HttpPost, Route("employee/create"), ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([FromForm] Employees.Employee employee)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-		
-			try
-			{
-                await _collection.InsertOneAsync(employee);
-            }
-
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex);
-                return RedirectToAction("Create");
-            }
-        }
-
-		else
-		{
             return RedirectToAction("Create");
         }
 
-		return RedirectToAction("Details", new {id = employee.Id });
+        try
+        {
+            await _collection.InsertOneAsync(employee);
+            return RedirectToAction("Details", new { id = employee.Id });
+        }
+
+        catch (Exception ex)
+        {
+            return View("Error", new Models.ErrorViewModel { Ex = ex });
+        }
+        
     }
 
     [Route("employee/edit/{id}")]
@@ -93,36 +88,42 @@ public class EmployeeController : Controller
             return NotFound();
         }
 
-        var employee = await _collection.Find(e => e.Id == id).FirstOrDefaultAsync();
-        if (employee == null)
+        try
+        {
+            var employee = await _collection.Find(e => e.Id == id).FirstOrDefaultAsync();
+            return View(employee);
+        }
+
+        catch (Exception ex)
+        {
+            return View("Error", new Models.ErrorViewModel { Ex = ex });
+        }
+    }
+
+    [HttpPost, Route("employee/edit/{id}"), ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(string id, [FromForm] Employees.Employee employee)
+    {
+        if(id == null || employee.Id == null)
         {
             return NotFound();
         }
-        return View(employee);
-    }
-
-    [HttpPost, Route("employee/edit/{id}")]
-    public async Task<IActionResult> Edit(string id, [FromForm] Employees.Employee employee)
-    {
-        if (ModelState.IsValid && id == employee.Id)
-        {
-            try
-            {
-                await _collection.ReplaceOneAsync((e => e.Id == employee.Id), employee);
-            }
-
-            catch (Exception ex)
-            {
-                return RedirectToAction("Edit");
-            }
-        }
-
-        else
+      
+        if (!ModelState.IsValid || id != employee.Id)
         {
             return RedirectToAction("Edit");
         }
 
-        return RedirectToAction("Details", new { id = employee.Id });
+        try
+        {
+            await _collection.ReplaceOneAsync((e => e.Id == employee.Id), employee);
+            return RedirectToAction("Details", new { id = employee.Id });
+        }
+
+        catch (Exception ex)
+        {
+            return View("Error", new Models.ErrorViewModel { Ex = ex });
+        }
+  
     }
 
     [Route("employee/delete/{id}")]
@@ -133,18 +134,20 @@ public class EmployeeController : Controller
             return NotFound();
         }
 
-        var employee = await _collection.Find(e => e.Id == id).FirstOrDefaultAsync();
-        
-        if (employee == null)
+        try
         {
-            return NotFound();
+            var employee = await _collection.Find(e => e.Id == id).FirstOrDefaultAsync();
+            return View("Delete", employee);
         }
 
-        return View("Delete",employee);
+        catch (Exception ex)
+        {
+            return View("Error", new Models.ErrorViewModel { Ex = ex });
+        }
     }
 
 
-	[HttpPost, Route("employee/delete/{id}")]
+	[HttpPost, Route("employee/delete/{id}"), ValidateAntiForgeryToken]
 	public async Task<IActionResult> DeleteConfirmed(string id)
 	{
         if (id == null)
@@ -152,8 +155,15 @@ public class EmployeeController : Controller
             return NotFound();
         }
 
-        await _collection.DeleteOneAsync(e => e.Id == id);
-		return RedirectToAction(nameof(Index));
+        try
+        {
+            await _collection.DeleteOneAsync(e => e.Id == id);
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception ex)
+        {
+            return View("Error", new Models.ErrorViewModel {Ex=ex});
+        }
 	}
 
 }
